@@ -1,12 +1,15 @@
-package com.example.dioinovationmvvm
+package com.example.dioinovationmvvm.fragment
 
-import android.app.Activity
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.graphics.convertTo
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dioinovationmvvm.application.TaskApplication
-import com.example.dioinovationmvvm.databinding.ActivityAddTaskBinding
-import com.example.dioinovationmvvm.datasourse.TaskDatabase
+import com.example.dioinovationmvvm.databinding.FragmentAddTaskBinding
 import com.example.dioinovationmvvm.extencions.format
 import com.example.dioinovationmvvm.extencions.text
 import com.example.dioinovationmvvm.model.Task
@@ -16,20 +19,24 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import java.util.*
 
-class AddTaskActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityAddTaskBinding
+class AddTaskFragment : Fragment() {
 
-    private val viewModel by lazy { ViewModelProvider(this, TaskViewModel.Factory(
-        TaskApplication.getInstance()
-    )).get(TaskViewModel::class.java) }
+    private val binding by lazy { FragmentAddTaskBinding.inflate(layoutInflater) }
+    private val viewModel by lazy {
+        ViewModelProvider(
+            requireActivity(), TaskViewModel.Factory(
+                TaskApplication.getInstance()
+            )
+        )[TaskViewModel::class.java]
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityAddTaskBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         insertListeners()
+        return binding.root
     }
 
     private fun insertListeners() {
@@ -40,7 +47,7 @@ class AddTaskActivity : AppCompatActivity() {
                 val offset = timeZone.getOffset(Date().time) * -1
                 binding.editData.text = Date(it + offset).format()
             }
-            datePicker.show(supportFragmentManager, "DATE_PICKER_TAG")
+            datePicker.show(parentFragmentManager, "DATE_PICKER_TAG")
         }
 
         binding.editHora.editText?.setOnClickListener {
@@ -53,27 +60,23 @@ class AddTaskActivity : AppCompatActivity() {
                 val minute = if (timePicker.minute in 0..9) "0${timePicker.minute}" else timePicker.minute
                 binding.editHora.text = "${hora}:${minute}"
             }
-            timePicker.show(supportFragmentManager, null)
+            timePicker.show(parentFragmentManager, null)
         }
 
         binding.btCancelar.setOnClickListener {
-            finish()
+            activity?.onBackPressed()
         }
 
         binding.btCriar.setOnClickListener {
             val task = Task(
+                id = 0,
                 title = binding.editNome.text,
                 date = binding.editData.text,
-                hour = binding.editHora.text,
-                id = intent.getIntExtra(TASK_ID, 0)
+                hour = binding.editHora.text
             )
             viewModel.insertTask(task)
-            setResult(Activity.RESULT_OK)
-            finish()
+            Toast.makeText(requireContext(),"Task Criada", Toast.LENGTH_LONG).show()
+            activity?.onBackPressed()
         }
-    }
-
-    companion object {
-        const val TASK_ID = "task_id"
     }
 }

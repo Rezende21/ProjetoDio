@@ -8,7 +8,7 @@ import com.example.dioinovationmvvm.model.Task
 interface TaskDaoSource {
 
     @Query("SELECT * FROM TO_DO_LIST")
-    fun getAllTask() :LiveData<List<Task>>
+    fun getAllTask() : LiveData<List<Task>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTask(task : Task)

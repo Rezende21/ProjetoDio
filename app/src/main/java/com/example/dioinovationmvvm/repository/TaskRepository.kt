@@ -7,7 +7,7 @@ import com.example.dioinovationmvvm.model.Task
 
 class TaskRepository(private val database: TaskDatabase) {
 
-    val AllTasks : LiveData<List<Task>> = database.taskDaoSource().getAllTask()
+    val allTasks : LiveData<List<Task>> = database.taskDaoSource().getAllTask()
 
     suspend fun insertTask(task: Task) {
         database.taskDaoSource().insertTask(task)

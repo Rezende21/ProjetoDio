@@ -1,10 +1,7 @@
 package com.example.dioinovationmvvm.viewmodel
 
 import android.app.Application
-import android.widget.Toast
 import androidx.lifecycle.*
-import com.example.dioinovationmvvm.application.TaskApplication
-import com.example.dioinovationmvvm.datasourse.TaskDatabase
 import com.example.dioinovationmvvm.datasourse.TaskDatabase.Companion.getDatabase
 import com.example.dioinovationmvvm.model.Task
 import com.example.dioinovationmvvm.repository.TaskRepository
@@ -16,7 +13,7 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = TaskRepository(getDatabase(application))
 
-    val Tasks = repository.AllTasks
+    val tasks = repository.allTasks
 
 
     fun insertTask(task: Task) {

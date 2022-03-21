@@ -9,4 +9,6 @@
     <string name="botao_nova_task">Botao para add nova Task</string>
     <string name="editar_popup">Editar</string>
     <string name="deletar_popup">Deletar</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
