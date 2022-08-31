@@ -1,16 +1,8 @@
 package com.example.dioinovationmvvm
-import android.app.Activity
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
-import com.example.dioinovationmvvm.adapter.TaskListAdapter
-import com.example.dioinovationmvvm.application.TaskApplication
 import com.example.dioinovationmvvm.databinding.ActivityMainBinding
-import com.example.dioinovationmvvm.viewmodel.TaskViewModel
-
 
 class MainActivity : AppCompatActivity() {
 

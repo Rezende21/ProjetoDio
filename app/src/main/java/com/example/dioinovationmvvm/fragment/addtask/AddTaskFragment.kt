@@ -1,33 +1,24 @@
-package com.example.dioinovationmvvm.fragment
+package com.example.dioinovationmvvm.fragment.addtask
 
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.example.dioinovationmvvm.R
-import com.example.dioinovationmvvm.application.TaskApplication
 import com.example.dioinovationmvvm.databinding.FragmentAddTaskBinding
 import com.example.dioinovationmvvm.extencions.format
 import com.example.dioinovationmvvm.extencions.text
 import com.example.dioinovationmvvm.model.Task
-import com.example.dioinovationmvvm.viewmodel.TaskViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 
 class AddTaskFragment : Fragment() {
 
     private val binding by lazy { FragmentAddTaskBinding.inflate(layoutInflater) }
-    private val viewModel by lazy {
-        ViewModelProvider(
-            requireActivity(), TaskViewModel.Factory(
-                TaskApplication.getInstance()
-            )
-        )[TaskViewModel::class.java]
-    }
+    private val viewModel by viewModel<ViewModelAddTask>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
@@ -38,7 +29,6 @@ class AddTaskFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         insertListeners()
         return binding.root
     }
@@ -67,13 +57,9 @@ class AddTaskFragment : Fragment() {
             timePicker.show(parentFragmentManager, null)
         }
 
-        binding.toolbar.setNavigationOnClickListener{
-            activity?.onBackPressed()
-        }
+        binding.toolbar.setNavigationOnClickListener{ pressBack()}
 
-        binding.btCancelar.setOnClickListener {
-            activity?.onBackPressed()
-        }
+        binding.btCancelar.setOnClickListener { pressBack()}
 
         binding.btCriar.setOnClickListener {
             val task = Task(
@@ -84,7 +70,11 @@ class AddTaskFragment : Fragment() {
             )
             viewModel.insertTask(task)
             Toast.makeText(requireContext(),"Task Criada", Toast.LENGTH_LONG).show()
-            activity?.onBackPressed()
+            pressBack()
         }
+    }
+
+    private fun pressBack() {
+        activity?.onBackPressed()
     }
 }

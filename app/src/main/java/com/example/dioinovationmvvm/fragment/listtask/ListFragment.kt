@@ -1,4 +1,4 @@
-package com.example.dioinovationmvvm.fragment
+package com.example.dioinovationmvvm.fragment.listtask
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,14 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.dioinovationmvvm.R
 import com.example.dioinovationmvvm.adapter.TaskListAdapter
-import com.example.dioinovationmvvm.application.TaskApplication
 import com.example.dioinovationmvvm.databinding.FragmentListBinding
 import com.example.dioinovationmvvm.model.Task
-import com.example.dioinovationmvvm.viewmodel.TaskViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListFragment : Fragment() {
 
@@ -21,24 +19,21 @@ class ListFragment : Fragment() {
         updateTaskOtherWay(it)
     } }
     private val binding by lazy { FragmentListBinding.inflate(layoutInflater) }
-    private val viewModel by lazy { ViewModelProvider(requireActivity(), TaskViewModel.Factory(
-        TaskApplication.getInstance()
-    ))[TaskViewModel::class.java] }
+    private val viewModel by viewModel<TaskViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        setipRecycleView()
+        setUpRecycleView()
         setObserver()
         insertListeners()
         return binding.root
     }
 
     private fun updateTaskOtherWay(it: Task) {
-        val action = ListFragmentDirections.actionListFragmentToEditFragment(it)
-            findNavController().navigate(action)
+        findNavController().navigate(ListFragmentDirections.actionListFragmentToEditFragment(it))
     }
 
     private fun insertListeners() {
@@ -53,12 +48,12 @@ class ListFragment : Fragment() {
    }
 
     private fun setObserver() {
-        viewModel.tasks.observe(requireActivity()) { task ->
+        viewModel.listTask().observe(requireActivity()) { task ->
             adapter.submitList(task)
         }
     }
 
-    private fun setipRecycleView() {
+    private fun setUpRecycleView() {
         binding.recycleView.adapter = adapter
     }
 }

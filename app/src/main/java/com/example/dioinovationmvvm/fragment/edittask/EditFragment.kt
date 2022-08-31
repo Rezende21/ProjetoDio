@@ -1,21 +1,19 @@
-package com.example.dioinovationmvvm.fragment
+package com.example.dioinovationmvvm.fragment.edittask
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
-import com.example.dioinovationmvvm.application.TaskApplication
 import com.example.dioinovationmvvm.databinding.FragmentEditBinding
 import com.example.dioinovationmvvm.extencions.format
 import com.example.dioinovationmvvm.extencions.text
 import com.example.dioinovationmvvm.model.Task
-import com.example.dioinovationmvvm.viewmodel.TaskViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 class EditFragment : Fragment() {
@@ -23,9 +21,7 @@ class EditFragment : Fragment() {
     private val args : EditFragmentArgs by navArgs()
     private lateinit var task: Task
     private val binding by lazy { FragmentEditBinding.inflate(layoutInflater) }
-    private val viewModel by lazy {
-        ViewModelProvider(requireActivity(), TaskViewModel.Factory(TaskApplication.getInstance()))[TaskViewModel::class.java]
-    }
+    private val viewModel by viewModel<ViewModelEditTask>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,11 +29,11 @@ class EditFragment : Fragment() {
     ): View {
         task = args.dadosTask
         initListenes()
-        getthetext()
+        getTextFromDB()
         return binding.root
     }
 
-    private fun getthetext() {
+    private fun getTextFromDB() {
         binding.editNomeEditTask.text = task.title
         binding.editDataEditTask.text = task.date
         binding.editHoraEditTask.text = task.hour
@@ -72,11 +68,11 @@ class EditFragment : Fragment() {
         }
 
         binding.toolbar.setNavigationOnClickListener{
-            activity?.onBackPressed()
+            pressBack()
         }
 
         binding.btCancelarEditTask.setOnClickListener {
-            activity?.onBackPressed()
+            pressBack()
         }
     }
 
@@ -89,6 +85,10 @@ class EditFragment : Fragment() {
             hour = binding.editHoraEditTask.text
         )
         viewModel.updateTask(task)
+        pressBack()
+    }
+
+    private fun pressBack() {
         activity?.onBackPressed()
     }
 }

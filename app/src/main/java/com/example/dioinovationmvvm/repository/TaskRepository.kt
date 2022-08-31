@@ -2,23 +2,24 @@ package com.example.dioinovationmvvm.repository
 
 import androidx.lifecycle.LiveData
 import com.example.dioinovationmvvm.datasourse.TaskDaoSource
-import com.example.dioinovationmvvm.datasourse.TaskDatabase
 import com.example.dioinovationmvvm.model.Task
 
-class TaskRepository(private val database: TaskDatabase) {
+class TaskRepository (private val database: TaskDaoSource) : Repository {
 
-    val allTasks : LiveData<List<Task>> = database.taskDaoSource().getAllTask()
-
-    suspend fun insertTask(task: Task) {
-        database.taskDaoSource().insertTask(task)
+    override suspend fun listAllTasks(): LiveData<List<Task>> {
+        return database.getAllTask()
     }
 
-    suspend fun deleteTask(task: Task) {
-        database.taskDaoSource().deleteTask(task)
+    override suspend fun editSingleTask(task: Task) {
+        database.updateTask(task)
     }
 
-    suspend fun updateTask(task: Task) {
-        database.taskDaoSource().updateTask(task)
+    override suspend fun deleteSingleTask(task: Task) {
+        database.deleteTask(task)
+    }
+
+    override suspend fun insertSingleTask(task: Task) {
+        database.insertTask(task)
     }
 
 }
