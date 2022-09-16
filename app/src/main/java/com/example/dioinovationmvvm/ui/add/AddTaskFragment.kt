@@ -1,17 +1,15 @@
-package com.example.dioinovationmvvm.fragment.add
+package com.example.dioinovationmvvm.ui.add
 
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import com.example.dioinovationmvvm.application.TaskApplication
 import com.example.dioinovationmvvm.databinding.FragmentAddTaskBinding
 import com.example.dioinovationmvvm.extencions.format
 import com.example.dioinovationmvvm.extencions.text
-import com.example.dioinovationmvvm.model.Task
-import com.example.dioinovationmvvm.fragment.list.TaskViewModel
+import com.example.dioinovationmvvm.data.local.Task
+import com.example.dioinovationmvvm.others.Status
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -71,15 +69,22 @@ class AddTaskFragment : Fragment() {
         }
 
         binding.btCriar.setOnClickListener {
-            val task = Task(
-                id = 0,
-                title = binding.editNome.text,
-                date = binding.editData.text,
-                hour = binding.editHora.text
-            )
-            viewModel.insertTask(task)
-            Toast.makeText(requireContext(),"Task Criada", Toast.LENGTH_LONG).show()
-            activity?.onBackPressed()
+            val taskName = binding.editNome.text
+            val taskHour = binding.editHora.text
+            val taskDate = binding.editData.text
+            viewModel.verifyTaskValue(taskName, taskHour, taskDate)
+            viewModel.taskStatus.observe(requireActivity()) {
+                when(it.status) {
+                    Status.SUCCESS -> {
+                        activity?.onBackPressed()
+                    }
+                    Status.LOADING -> {}
+                    Status.ERROR -> {
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+
         }
     }
 }

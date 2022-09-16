@@ -1,16 +1,18 @@
-package com.example.dioinovationmvvm.fragment.edit
+package com.example.dioinovationmvvm.ui.edit
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.dioinovationmvvm.databinding.FragmentEditBinding
 import com.example.dioinovationmvvm.extencions.format
 import com.example.dioinovationmvvm.extencions.text
-import com.example.dioinovationmvvm.model.Task
+import com.example.dioinovationmvvm.data.local.Task
+import com.example.dioinovationmvvm.others.Status
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -79,14 +81,20 @@ class EditFragment : Fragment() {
     }
 
     private fun updateTask() {
-        val id = task.id
-        val task = Task(
-            id = id,
-            title = binding.editNomeEditTask.text,
-            date = binding.editDataEditTask.text,
-            hour = binding.editHoraEditTask.text
-        )
-        viewModel.updateTask(task)
-        activity?.onBackPressed()
+        val taskName = binding.editNomeEditTask.text
+        val taskHour = binding.editHoraEditTask.text
+        val taskData = binding.editDataEditTask.text
+        viewModel.checkTaskValue(taskName, taskHour, taskData)
+        viewModel.statusTask.observe(requireActivity()) {
+            when(it.status) {
+                Status.SUCCESS -> {
+                    activity?.onBackPressed()
+                }
+                Status.LOADING -> {}
+                Status.ERROR -> {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 }

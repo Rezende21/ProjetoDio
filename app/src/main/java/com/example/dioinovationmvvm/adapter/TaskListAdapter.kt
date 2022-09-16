@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dioinovationmvvm.R
 import com.example.dioinovationmvvm.databinding.ListitemBinding
-import com.example.dioinovationmvvm.model.Task
+import com.example.dioinovationmvvm.data.local.Task
 
 class TaskListAdapter(
     private val onTaskClick : (Task) -> Unit

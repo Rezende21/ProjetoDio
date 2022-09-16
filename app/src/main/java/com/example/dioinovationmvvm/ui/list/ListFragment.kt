@@ -1,4 +1,4 @@
-package com.example.dioinovationmvvm.fragment.list
+package com.example.dioinovationmvvm.ui.list
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.dioinovationmvvm.R
 import com.example.dioinovationmvvm.adapter.TaskListAdapter
 import com.example.dioinovationmvvm.databinding.FragmentListBinding
-import com.example.dioinovationmvvm.model.Task
+import com.example.dioinovationmvvm.data.local.Task
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

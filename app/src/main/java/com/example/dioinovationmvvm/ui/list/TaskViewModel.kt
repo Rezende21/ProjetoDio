@@ -1,7 +1,7 @@
-package com.example.dioinovationmvvm.fragment.list
+package com.example.dioinovationmvvm.ui.list
 
 import androidx.lifecycle.*
-import com.example.dioinovationmvvm.model.Task
+import com.example.dioinovationmvvm.data.local.Task
 import com.example.dioinovationmvvm.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -22,11 +22,9 @@ class TaskViewModel @Inject constructor(private val repository: Repository) : Vi
     }
 
     fun deleteTask(task: Task) {
-        viewModelScope.launch { Dispatchers.IO
+        viewModelScope.launch {
            repository.deleteSingleTask(task)
         }
     }
-
-
 }
 

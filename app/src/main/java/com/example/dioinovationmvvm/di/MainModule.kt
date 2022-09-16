@@ -2,8 +2,8 @@ package com.example.dioinovationmvvm.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.dioinovationmvvm.datasourse.TaskDaoSource
-import com.example.dioinovationmvvm.datasourse.TaskDatabase
+import com.example.dioinovationmvvm.data.local.TaskDaoSource
+import com.example.dioinovationmvvm.data.local.TaskDatabase
 import com.example.dioinovationmvvm.repository.Repository
 import com.example.dioinovationmvvm.repository.TaskRepository
 import dagger.Module

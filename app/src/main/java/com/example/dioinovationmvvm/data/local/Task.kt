@@ -1,4 +1,4 @@
-package com.example.dioinovationmvvm.model
+package com.example.dioinovationmvvm.data.local
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -10,7 +10,7 @@ import java.io.Serializable
 data class Task (
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    var id: Int,
+    var id: Int? = null,
 
     @ColumnInfo(name = "title")
     var title : String,

@@ -1,7 +1,8 @@
-package com.example.dioinovationmvvm
+package com.example.dioinovationmvvm.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
+import com.example.dioinovationmvvm.R
 import com.example.dioinovationmvvm.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 

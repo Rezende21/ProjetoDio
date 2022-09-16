@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/addTaskFragment"
-        android:name="com.example.dioinovationmvvm.fragment.add.AddTaskFragment"
+        android:name="com.example.dioinovationmvvm.ui.add.AddTaskFragment"
         android:label="fragment_add_task"
         tools:layout="@layout/fragment_add_task" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.example.dioinovationmvvm.fragment.list.ListFragment"
+        android:name="com.example.dioinovationmvvm.ui.list.ListFragment"
         android:label="fragment_list"
         tools:layout="@layout/fragment_list" >
         <action
@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/editFragment"
-        android:name="com.example.dioinovationmvvm.fragment.edit.EditFragment"
+        android:name="com.example.dioinovationmvvm.ui.edit.EditFragment"
         android:label="fragment_edit"
         tools:layout="@layout/fragment_edit" >
         <action
@@ -37,6 +37,6 @@
             app:destination="@id/listFragment" />
         <argument
             android:name="dados_task"
-            app:argType="com.example.dioinovationmvvm.model.Task" />
+            app:argType="com.example.dioinovationmvvm.data.local.Task" />
     </fragment>
 </navigation>

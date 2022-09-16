@@ -1,8 +1,7 @@
-package com.example.dioinovationmvvm.datasourse
+package com.example.dioinovationmvvm.data.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.dioinovationmvvm.model.Task
 
 @Dao
 interface TaskDaoSource {

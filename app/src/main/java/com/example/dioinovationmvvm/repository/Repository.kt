@@ -1,7 +1,7 @@
 package com.example.dioinovationmvvm.repository
 
 import androidx.lifecycle.LiveData
-import com.example.dioinovationmvvm.model.Task
+import com.example.dioinovationmvvm.data.local.Task
 
 interface Repository {
 

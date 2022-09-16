@@ -1,9 +1,8 @@
 package com.example.dioinovationmvvm.repository
 
 import androidx.lifecycle.LiveData
-import com.example.dioinovationmvvm.datasourse.TaskDaoSource
-import com.example.dioinovationmvvm.datasourse.TaskDatabase
-import com.example.dioinovationmvvm.model.Task
+import com.example.dioinovationmvvm.data.local.TaskDaoSource
+import com.example.dioinovationmvvm.data.local.Task
 
 class TaskRepository(private val database: TaskDaoSource) : Repository {
 
